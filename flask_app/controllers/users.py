@@ -11,15 +11,18 @@ def show_home_page():
 
 @app.route('/create-user')
 def process_form():
+    pw_hash = bcrypt.generate_password_hash(request.form['password'])
     data = {
-        'key': request.form('value')
+        'first_name': request.form['first_name'],
+        'last_name': request.form['last_name'],
+        'email': request.form['email'],
+        'password': pw_hash
     }
+    if not User.validate(data):
+        return redirect('/')
     User.create(data)
-    return redirect('/')
+    return redirect('/dashboard')
 
 @app.route('/dashboard')
-def show_something_else(id):
-    data = {
-        'id': id
-    }
-    return render_template('something.html', data)
+def show_dashboard():
+    return render_template('dashboard.html')

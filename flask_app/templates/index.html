@@ -20,18 +20,42 @@
             {% endif %}
         {% endwith %}
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="reg-form col-lg-6">
+    <div class="container-fluid">
+        <div class="form-row row">
+            <div class="reg-form col-lg-5">
                 <h1>Register</h1>
                 <form action="/create-user" method="post">
                     <div class="form-group row">
-                        <label for="name" class="col-sm-4 col-form-label">Your Name: </label>
+                        <label for="first_name" class="col-sm-4 col-form-label">First Name: </label>
                         <div class="col-sm-6">
-                            <input type="text" name="name" class="form-control">
+                            <input type="text" name="first_name" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="last_name" class="col-sm-4 col-form-label">Last Name: </label>
+                        <div class="col-sm-6">
+                            <input type="text" name="last_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-4 col-form-label">Email: </label>
+                        <div class="col-sm-6">
+                            <input type="text" name="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-4 col-form-label">Password: </label>
+                        <div class="col-sm-6">
+                            <input type="password" name="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="pass_confirm" class="col-sm-4 col-form-label">Confirm Password: </label>
+                        <div class="col-sm-6">
+                            <input type="password" name="pass_confirm" class="form-control">
+                        </div>
+                    </div>
+                    <!-- <div class="form-group row">
                         <label for="location" class="col-sm-4 col-form-label">Dojo Location: </label>
                         <div class="col-sm-8">
                             <select name="location" class="form-select">
@@ -44,7 +68,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="language" class="col-sm-4 col-form-label">Favorite Language: </label>
+                        <label for="language" class="col-sm-4 col-form-label">Favorite Language(s): </label>
                         <div class="col-sm-8">
                             <select name="language" class="form-select">
                                 <option value="NA">--</option>
@@ -54,11 +78,11 @@
                                 <option value="C#">C#</option>
                             </select>
                         </div>
-                    </div>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    </div> -->
+                    <input class="btn btn-success" type="submit"></input>
                 </form>
             </div>
-            <div class="login-form col-lg-6">
+            <div class="login-form col-lg-5">
                 <h1>Login</h1>
                 <form action="/login" method="post">
                     <div class="form-group row">
@@ -73,6 +97,7 @@
                             <input type="password" name="password" class="form-control">
                         </div>
                     </div>
+                    <input class="btn btn-primary" type="submit"></input>
                 </form>
             </div>
         </div>
