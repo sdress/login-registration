@@ -18,9 +18,11 @@ def process_form():
         'last_name': request.form['last_name'],
         'email': request.form['email'],
         'password': bcrypt.generate_password_hash(request.form['password']),
+        'location': request.form.get('location'),
+        'languages': str(request.form.getlist('languages'))
     }
-    user_id = User.create(data)
-    session['user_id'] = user_id
+    user = User.create(data)
+    session['user_id'] = user.id
     return redirect('/dashboard')
 
 @app.route('/login', methods = ['POST'])

@@ -16,6 +16,8 @@ class User:
         self.last_name = data['last_name']
         self.email = data['email']
         self.password = data['password']
+        self.location = data['location']
+        self.languages = data['languages']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         # insert other required fields as shown in schema
@@ -26,7 +28,7 @@ class User:
     @classmethod
     def create(cls, data):
         # some query
-        query = "INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES ( %(first_name)s, %(last_name)s, %(email)s, %(password)s, NOW(), NOW() );"
+        query = "INSERT INTO users (first_name, last_name, email, password, location, languages, created_at, updated_at) VALUES ( %(first_name)s, %(last_name)s, %(email)s, %(password)s, %(location)s, %(languages)s, NOW(), NOW() );"
         return connectToMySQL(db).query_db(query, data)
     
     # read
@@ -43,7 +45,6 @@ class User:
     def get_from_email(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(db).query_db(query, data)
-        print(results)
         if len(results) < 1:
             return False
         return cls(results[0])
@@ -58,7 +59,7 @@ class User:
 
     @classmethod
     def get_last(cls):
-        query = "SELECT * FROM users ORDER BY id DESC LIMIT 1"
+        query = "SELECT * FROM users ORDER BY id DESC LIMIT 1;"
         results = connectToMySQL(db).query_db(query)
         return cls(results[0])
     
@@ -78,9 +79,8 @@ class User:
     @staticmethod
     def validate(user):
         is_valid = True # we assume this is true
-        query = "SELECT * FROM users WHERE email = %(email)s"
+        query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(db).query_db(query, user)
-        print(results)
         if len(results) >= 1:
             flash("Account already exists")
             is_valid = False
@@ -98,6 +98,9 @@ class User:
             is_valid = False
         if user['password'] != user['pass_confirm']:
             flash("Passwords must match!")
+            is_valid = False
+        if len(user['location']) < 3:
+            flash("Location is required!")
             is_valid = False
         return is_valid
     

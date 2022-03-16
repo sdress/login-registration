@@ -13,7 +13,23 @@
     <main>
         <div class="container">
             <h1>Welcome {{user.first_name}}!</h1>
-
+            <div class="reader">
+                <h3>Your Info:</h3>
+                <table class=" table table-striped">
+                    <tr>
+                        <th>Location:</th>
+                        <td>{{user.location}}</td>
+                    </tr>
+                    <tr>
+                        <th>Language(s):</th>
+                        <td>{{user.languages}}</td>
+                    </tr>
+                    <tr>
+                        <th>User Since:</th>
+                        <td>{{user.created_at.strftime("%b %d, %Y")}}</td>
+                    </tr>
+                </table>
+            </div>
             <button class="btn btn-primary"><a href="/">Logout</a></button>
         </div>
     </main>
