@@ -21,8 +21,8 @@ def process_form():
         'location': request.form.get('location'),
         'languages': str(request.form.getlist('languages'))
     }
-    user = User.create(data)
-    session['user_id'] = user.id
+    user_id = User.create(data)
+    session['user_id'] = user_id
     return redirect('/dashboard')
 
 @app.route('/login', methods = ['POST'])
