@@ -40,13 +40,22 @@ class User:
         return all_list
     
     @classmethod
-    def get_one(cls, data):
+    def get_from_email(cls, data):
+        query = "SELECT * FROM users WHERE email = %(email)s;"
+        results = connectToMySQL(db).query_db(query, data)
+        print(results)
+        if len(results) < 1:
+            return False
+        return cls(results[0])
+    
+    @classmethod
+    def get_from_id(cls, data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
         results = connectToMySQL(db).query_db(query, data)
         if len(results) < 1:
             return False
         return cls(results[0])
-    
+
     @classmethod
     def get_last(cls):
         query = "SELECT * FROM users ORDER BY id DESC LIMIT 1"
@@ -86,6 +95,9 @@ class User:
             is_valid = False
         if len(user['password']) < 8:
             flash("Password must be at least 8 characters")
+            is_valid = False
+        if user['password'] != user['pass_confirm']:
+            flash("Passwords must match!")
             is_valid = False
         return is_valid
     
