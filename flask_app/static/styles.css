@@ -17,5 +17,12 @@
 
 .login-form h1{
     color: #007bff;
-    /* color: dodgerblue; */
+}
+
+.container h1{
+    text-align: center;
+}
+
+.btn a{
+    color: whitesmoke;
 }

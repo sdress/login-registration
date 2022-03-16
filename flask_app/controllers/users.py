@@ -9,20 +9,20 @@ bcrypt = Bcrypt(app)
 def show_home_page():
     return render_template('index.html')
 
-@app.route('/create-user')
+@app.route('/create-user', methods = ['POST'])
 def process_form():
-    pw_hash = bcrypt.generate_password_hash(request.form['password'])
     data = {
         'first_name': request.form['first_name'],
         'last_name': request.form['last_name'],
         'email': request.form['email'],
-        'password': pw_hash
+        'password': bcrypt.generate_password_hash(request.form['password']),
     }
     if not User.validate(data):
         return redirect('/')
-    User.create(data)
+    user = User.create(data)
+    session['user_id'] = user
     return redirect('/dashboard')
 
 @app.route('/dashboard')
 def show_dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', user=User.get_last())

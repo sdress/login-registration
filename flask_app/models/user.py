@@ -47,6 +47,12 @@ class User:
             return False
         return cls(results[0])
     
+    @classmethod
+    def get_last(cls):
+        query = "SELECT * FROM users ORDER BY id DESC LIMIT 1"
+        results = connectToMySQL(db).query_db(query)
+        return cls(results[0])
+    
     # update
     @classmethod
     def update(cls, data):
@@ -61,23 +67,29 @@ class User:
     
     #basic validation form
     @staticmethod
-    def validate(data):
+    def validate(user):
         is_valid = True # we assume this is true
-        query = "SELECT * FROM users WHERE id = %(id)s"
-        results = connectToMySQL(db).query_db(query, data)
+        query = "SELECT * FROM users WHERE email = %(email)s"
+        results = connectToMySQL(db).query_db(query, user)
+        print(results)
         if len(results) >= 1:
             flash("Account already exists")
             is_valid = False
-        if len(data['first_name']) < 3:
-            flash("First name is a required field.")
+        if len(user['first_name']) < 2:
+            flash("First name must be at least 2 characters")
             is_valid = False
-        if len(data['last_name']) < 3:
-            flash("Last name is a required field.")
+        if len(user['last_name']) < 2:
+            flash("Last name must be at least 2 characters")
             is_valid = False
-        if not EMAIL_REGEX.match(data['email']):
+        if not EMAIL_REGEX.match(user['email']):
             flash("Invalid email address!")
             is_valid = False
-        if len(data['password']) < 8:
-            flash("Password must be at least 8 characters long")
+        if len(user['password']) < 8:
+            flash("Password must be at least 8 characters")
             is_valid = False
         return is_valid
+    
+    @staticmethod
+    def validate_login(data):
+        is_valid = True
+        pass
